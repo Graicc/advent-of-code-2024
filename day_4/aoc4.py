@@ -26,15 +26,15 @@ for row in range(0,len(data)):
 
 print(count)
 
-# Doesn't work yet :(
 count = 0
 for row in range(0,len(data)):
 	for col in range(0,len(data[row])):
 		if (data[row][col] != 'M'):
 			continue
 		
-		for dir_x in range(-1,2):
-			for dir_y in range(-1,2):
+		# Only diagonals count!!!!
+		for dir_x in (-1,1):
+			for dir_y in (-1,1):
 				def has_in_dir(letter: str, r: int) -> bool:
 					x = row + (dir_x * r)
 					y = col + (dir_y * r)
@@ -64,6 +64,5 @@ for row in range(0,len(data)):
 
 					if has_in_dir_2("M", 0) and has_in_dir_2("S", 2):
 						count += 1
-
 
 print(count)
