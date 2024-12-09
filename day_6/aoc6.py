@@ -41,23 +41,21 @@ total = 0
 
 walls_walls = walls.copy()
 
-for row in range(height):
-	print("row")
-	for col in range(width):
-		walls = walls_walls.copy()
-		walls.add((row, col))
+for row,col in positions:
+	walls = walls_walls.copy()
+	walls.add((row, col))
 
-		states: Set[Tuple[Tuple[int, int], Tuple[int, int]]] = set()
-		start = start_start
-		dir = (-1, 0)
-		while (start[0] >= 0 and start[0] < height and start[1] >= 0 and start[1] < width):
-			if (start, dir) in states:
-				total += 1
-				break
-			states.add((start, dir))
-			if move_in_dir(start, dir) in walls:
-				dir = (dir[1], -dir[0])
-			else:
-				start = move_in_dir(start, dir)
+	states: Set[Tuple[Tuple[int, int], Tuple[int, int]]] = set()
+	start = start_start
+	dir = (-1, 0)
+	while (start[0] >= 0 and start[0] < height and start[1] >= 0 and start[1] < width):
+		if (start, dir) in states:
+			total += 1
+			break
+		states.add((start, dir))
+		if move_in_dir(start, dir) in walls:
+			dir = (dir[1], -dir[0])
+		else:
+			start = move_in_dir(start, dir)
 
 print(total)
