@@ -1,11 +1,5 @@
-import functools
-from typing import List, Set
+from typing import Set
 from collections import namedtuple
-import re
-import copy
-import tempfile
-from PIL import Image
-import os
 
 Point = namedtuple("Point", ["x", "y"])
 
@@ -36,25 +30,6 @@ with open("day_15/input.txt", "r") as f:
                 blocks.add(Point(x * 2, y))
             elif c == "@":
                 pos = Point(x * 2, y)
-
-
-def print_board():
-    for y in range(50):
-        line = ""
-        for x in range(50):
-            p = Point(x, y)
-            if p in walls:
-                line += "#"
-            elif p in blocks:
-                line += "["
-            elif add(p, LEFT) in blocks:
-                line += "]"
-            elif p == pos:
-                line += "@"
-            else:
-                line += " "
-        if any([c != " " for c in line]):
-            print(line)
 
 
 def can_push_block(pos: Point, dir: Point):
@@ -114,9 +89,6 @@ for move in moves:
         case _:
             continue
 
-    # print_board()
-    # input()
-
     npos = add(pos, dir)
     if npos in walls:
         continue
@@ -140,4 +112,3 @@ for move in moves:
         pos = npos
 
 print(sum([100 * block.y + block.x for block in blocks]))
-# print_board()
