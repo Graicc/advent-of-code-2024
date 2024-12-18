@@ -41,7 +41,7 @@ def run(reg_a, reg_b, reg_c, program):
             raise ValueError()
 
         ip += 2
-    return output
+    return output[:-1]
 
 
 with open("day_17/input.txt", "r") as f:
@@ -52,7 +52,7 @@ with open("day_17/input.txt", "r") as f:
 
     program = list(map(int, lines[-1].split()[-1].split(",")))
 
-    print(run(reg_a, reg_b, reg_c, program)[:-1])
+    print(run(reg_a, reg_b, reg_c, program))
 
 
 def val(a: int) -> int:
@@ -67,28 +67,13 @@ def fast_run(a: int):
         a //= 8
         if a == 0:
             break
-    return output
+    return output[:-1]
 
 
-# Ensure that run == fast_run
-# for i in range(100000):
-#     slow = run(i, 0, 0, program)
-#     fast = fast_run(i)
-#     assert slow == fast
-
-print(fast_run(50230824)[:-1])
-# for i in range(50230824 // 8 * 8, 50230824 // 8 * 8 + 8):
-#     print(i)
-#     print(fast_run(i)[:-1])
-
-l = 7
+# print(fast_run(50230824))
 
 
 def solve(pattern: List[int], lower_seven_bits: int) -> int:
-    # print("solve", pattern, lower_three_bits)
-    # if len(pattern) == len(program) - 3:
-    # print(len(pattern))
-    # if len(pattern) == len(program) - 2:
     if len(pattern) == 0:
         if lower_seven_bits == 0:
             return 0
@@ -99,53 +84,22 @@ def solve(pattern: List[int], lower_seven_bits: int) -> int:
     rest = pattern[1:]
 
     for i in range(8):
-        a = i << l | lower_seven_bits
-        if i == 4:
-            assert len(bin(a)) == 7 + 3 + 2
+        a = i << 7 | lower_seven_bits
         if val(a) == to_match:
-            # print("l7b", len(pattern), lower_seven_bits)
-            # print(a, to_match)
-            # return solve(rest, i) << 3 | lower_three_bits
-            # print("match", to_match, i, a)
             s = solve(rest, a >> 3)
-            # print("post match", s)
             if s == -1:
-                # return -1
                 continue
             else:
                 return s << 3 | a
 
-    # print(f"no match at {len(program) - len(pattern)}")
     return -1
 
 
-str_program = ",".join(map(str, program))
-print(str_program)
-for i in range(2**l):
+# str_program = ",".join(map(str, program))
+# print(str_program)
+for i in range(2**7):
     a = solve(program, i)
     if a != -1:
-        if fast_run(a) == str_program + ",":
-            print("SOLVED")
-            print(a)
-            print(bin(a))
-            print(fast_run(a))
-            break
-        else:
-            print(a)
-            print(fast_run(a))
-
-# print(fast_run(477489078123537 >> 3))
-# # sol = 0b10001101100100100011000010110111000101011110000010001
-# sol = 0b01100100100011000010110111000101011110000010001
-# print(sol)
-# print(fast_run(sol))
-# curr = 0
-# while True:
-#     if curr % 1_000_000 == 0:
-#         print(curr)
-
-#     if fast(curr):
-#         print(curr)
-#         break
-
-#     curr += 1
+        print(a)
+        # print(fast_run(a))
+        break
