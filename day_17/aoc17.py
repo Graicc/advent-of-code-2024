@@ -56,21 +56,7 @@ with open("day_17/input.txt", "r") as f:
 
 
 def val(a: int) -> int:
-    return (~(a % 8) ^ (a >> ((a % 8) ^ 3))) % 8
-
-
-def fast_run(a: int):
-    output = ""
-    while True:
-        output += str((~(a % 8) ^ (a >> ((a % 8) ^ 3))) % 8)
-        output += ","
-        a //= 8
-        if a == 0:
-            break
-    return output[:-1]
-
-
-# print(fast_run(50230824))
+    return int(run(a, 0, 0, program).split(",")[0])
 
 
 def solve(pattern: List[int], lower_seven_bits: int) -> int:
@@ -101,5 +87,5 @@ for i in range(2**7):
     a = solve(program, i)
     if a != -1:
         print(a)
-        # print(fast_run(a))
+        # print(run(a, 0, 0, program))
         break
